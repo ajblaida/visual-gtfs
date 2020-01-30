@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 export default class RouteDto {
 	geometry: any[];
 	onestop_id: string;

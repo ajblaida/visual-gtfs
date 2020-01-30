@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {Map, View} from 'ol';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
+import { Component, OnInit } from "@angular/core";
+import {Map, View} from "ol";
+import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
 
 @Component({
-	selector: 'app-map',
-	templateUrl: './map.component.html',
-	styleUrls: ['./map.component.css']
+	selector: "app-map",
+	templateUrl: "./map.component.html",
+	styleUrls: ["./map.component.css"]
 })
 export class MapComponent implements OnInit {
 
@@ -14,7 +14,7 @@ export class MapComponent implements OnInit {
 
 	ngOnInit() {
 		const map = new Map({
-			target: 'map',
+			target: "map",
 			layers: [
 				new TileLayer({
 					source: new OSM()

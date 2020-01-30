@@ -1,0 +1,7 @@
+<div *ngIf="vm$ | async as vm">
+	<ul>
+		<li *ngFor="let route of vm.routes">
+			Name: {{route.name}}
+		</li>
+	</ul>
+</div>
