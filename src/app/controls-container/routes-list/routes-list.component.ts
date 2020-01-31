@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import RouteResponse from "../../shared/models/route-response.class";
 import { tap, filter, switchMap } from "rxjs/operators";
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 import { RouteService } from "../../shared/services/route.service";
 import { TransitOperatorSubjectService } from "src/app/shared/services/subjects/transit-operator-subject.service";
 
@@ -30,5 +30,4 @@ export class RoutesListComponent implements OnInit {
 				})
 			);
 	}
-
 }
