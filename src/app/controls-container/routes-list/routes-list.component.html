@@ -1,6 +1,9 @@
+<div *ngIf="selectedRoute$ | async as route">
+	<button id="clear-route-button" (click)="clearSelectedRoute()">Back {{route.name}}</button>
+</div>
 <div *ngIf="vm$ | async as vm">
-	<ul>
-		<li *ngFor="let route of vm.routes">
+	<ul class="stop-card-list">
+		<li (click)="onRouteClicked(route)" class="stop-card" *ngFor="let route of vm.routes">
 			Name: {{route.name}}
 		</li>
 	</ul>
