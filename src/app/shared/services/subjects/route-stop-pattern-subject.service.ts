@@ -10,14 +10,13 @@ import { RouteStopPatternService } from "../route-stop-pattern.service";
 	providedIn: "root"
 })
 export class RouteStopPatternSubjectService {
-	private routeStopPatternsForSelectedRouteSource = new BehaviorSubject<RouteStopPattern[]>([]);
-	private routeStopPatternsForSelectedRoute$ = this.routeStopPatternsForSelectedRouteSource.asObservable();
+	private routeStopPatternsForSelectedRouteSource = new BehaviorSubject<RouteStopPattern[]>(null);
+	public routeStopPatternsForSelectedRoute$ = this.routeStopPatternsForSelectedRouteSource.asObservable();
 	private selectedRouteStopPatternBehaviorSubject = new BehaviorSubject<RouteStopPattern>(null);
 	public selectedRouteStopPattern$ = this.selectedRouteStopPatternBehaviorSubject.asObservable();
 
 	constructor(private routeSubjectService: RouteSubjectService,
 		private routeStopPatternService: RouteStopPatternService) {
-		console.log('init');
 		this.routeSubjectService.selectedRoute$
 			.pipe(
 				filter(route => route != null),
