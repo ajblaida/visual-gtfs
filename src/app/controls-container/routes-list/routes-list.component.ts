@@ -1,6 +1,7 @@
+import { RouteStopPatternSubjectService } from './../../shared/services/subjects/route-stop-pattern-subject.service';
 import { RouteSubjectService } from './../../shared/services/subjects/route-subject.service';
 import { Component, OnInit } from "@angular/core";
-import RouteResponse from "../../shared/models/route-response.class";
+import RouteResponse from "../../shared/models/responses/route-response.class";
 import { tap, filter, switchMap, mergeMap } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { RouteService } from "../../shared/services/route.service";
@@ -19,7 +20,8 @@ export class RoutesListComponent implements OnInit {
 	constructor(
 		private routeService: RouteService,
 		private routeSubjectService: RouteSubjectService,
-		private transitOperatorSubjectService: TransitOperatorSubjectService
+		private transitOperatorSubjectService: TransitOperatorSubjectService,
+		private routeStopPatternSubjectService: RouteStopPatternSubjectService
 	) { }
 
 	ngOnInit() {

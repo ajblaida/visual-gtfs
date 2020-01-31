@@ -17,11 +17,11 @@ export class CookieService {
 			map.set(pairArray[0], pairArray[1]);
 			return map;
 		}, new Map<string, string>());
-		console.log('built cookies', this.cookies);
+		console.log("built cookies", this.cookies);
 	}
 
 	get(name: string): string {
-		console.log('cookies', this.cookies);
+		console.log("cookies", this.cookies);
 		return this.cookies.get(name);
 	}
 
@@ -31,7 +31,7 @@ export class CookieService {
 	}
 
 	has(name: string): boolean {
-		console.log('has cookies', this.cookies);
+		console.log("has cookies", this.cookies);
 
 		return this.cookies.has(name);
 	}

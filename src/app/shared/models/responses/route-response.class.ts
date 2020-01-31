@@ -1,6 +1,6 @@
 import PagedResponse from "./paged-response.class";
-import Route from "./route.class";
-import RouteResponseDto from "../dto/route-response-dto.class";
+import Route from "../route.class";
+import RouteResponseDto from "../../dto/responses/route-response-dto.class";
 
 export default class RouteResponse extends PagedResponse {
 

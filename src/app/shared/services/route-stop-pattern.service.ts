@@ -5,25 +5,27 @@ import { map, tap } from "rxjs/operators";
 import RouteResponse from "../models/responses/route-response.class";
 import RouteResponseDto from "../dto/responses/route-response-dto.class";
 import { TransitLandClient } from "../models/transit-land-client.class";
+import RouteStopPatternResponse from "../models/responses/route-stop-pattern-response.class";
+import { RouteStopPatternResponseDto } from "../dto/responses/route-stop-pattern-response-dto.class";
 
 @Injectable({
 	providedIn: "root"
 })
-export class RouteService {
+export class RouteStopPatternService {
 	constructor(private http: TransitLandClient) {
 	}
 
-	private url = this.http.baseUrl + "routes";
+	private url = this.http.baseUrl + "route_stop_patterns";
 
-	get(oneStopId: string): Observable<RouteResponse> {
-		return this.http.get<RouteResponseDto>(this.url, {
+	get(oneStopId: string): Observable<RouteStopPatternResponse> {
+		return this.http.get<RouteStopPatternResponseDto>(this.url, {
 				params: {
-					operated_by: oneStopId,
+					traversed_by: oneStopId,
 					per_page: "10"
 				}
 			})
 			.pipe(
-				map(dto => new RouteResponse(dto)),
+				map(dto => new RouteStopPatternResponse(dto)),
 			);
 	}
 

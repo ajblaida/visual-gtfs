@@ -1,4 +1,4 @@
-import MetadataDto from "../dto/metadata-dto.class";
+import MetadataDto from "../../dto/responses/metadata-dto.class";
 
 export default class Metadata {
 	constructor(dto: MetadataDto) {

@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 export class RouteStopPatternDto {
 	geometry: any;
 	onestop_id: string;
@@ -10,5 +11,5 @@ export class RouteStopPatternDto {
 	stop_distances: number[];
 	geometry_source: string;
 	color: string;
-	
+	trips: string[];
 }
