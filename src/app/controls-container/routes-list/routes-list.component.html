@@ -4,7 +4,7 @@
 <div *ngIf="vm$ | async as vm">
 	<ul class="stop-card-list">
 		<li (click)="onRouteClicked(route)" class="stop-card" *ngFor="let route of vm.routes">
-			Name: {{route.name}}
+			{{route.name}}
 		</li>
 	</ul>
 </div>

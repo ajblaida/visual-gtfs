@@ -1,3 +1,11 @@
 <app-onestop-input></app-onestop-input>
-<app-routes-list></app-routes-list>
-<app-route-stop-pattern-list></app-route-stop-pattern-list>
+
+<div *ngIf="vm$ | async as vm; else suggestions">
+	<app-routes-list></app-routes-list>
+	<app-route-stop-pattern-list></app-route-stop-pattern-list>
+</div>
+<ng-template #suggestions>
+	<app-suggested-operators></app-suggested-operators>
+</ng-template>
+
+<a routerLink="/about" routerLinkActive="active">About</a>

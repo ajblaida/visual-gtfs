@@ -1,9 +1,9 @@
-import { RouteStopPatternSubjectService } from './../../shared/services/subjects/route-stop-pattern-subject.service';
-import { RouteSubjectService } from './../../shared/services/subjects/route-subject.service';
+import { RouteStopPatternSubjectService } from "./../../shared/services/subjects/route-stop-pattern-subject.service";
+import { RouteSubjectService } from "./../../shared/services/subjects/route-subject.service";
 import { Component, OnInit } from "@angular/core";
 import RouteResponse from "../../shared/models/responses/route-response.class";
 import { tap, filter, switchMap, mergeMap } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { RouteService } from "../../shared/services/route.service";
 import { TransitOperatorSubjectService } from "src/app/shared/services/subjects/transit-operator-subject.service";
 import Route from "src/app/shared/models/route.class";
@@ -28,9 +28,12 @@ export class RoutesListComponent implements OnInit {
 		this.selectedRoute$ = this.routeSubjectService.selectedRoute$;
 		this.vm$ = this.transitOperatorSubjectService.transitOperatorOnestopId$
 			.pipe(
-				filter(id => id != null),
 				switchMap((id) => {
-					return this.routeService.get(id);
+					if (id != null) {
+						return this.routeService.get(id);
+					} else {
+						return of(null);
+					}
 				})
 			);
 	}

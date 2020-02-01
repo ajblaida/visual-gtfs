@@ -1,8 +1,9 @@
-import { RouteSubjectService } from './../../shared/services/subjects/route-subject.service';
-import { MapLayerContainer } from './map-layer-container.class';
-import { MapLayer } from './map-layer.class';
-import { RouteStopPatternSubjectService } from './../../shared/services/subjects/route-stop-pattern-subject.service';
-import { RouteStopPattern } from './../../shared/models/route-stop-pattern.class';
+import { TransitOperatorSubjectService } from "./../../shared/services/subjects/transit-operator-subject.service";
+import { RouteSubjectService } from "./../../shared/services/subjects/route-subject.service";
+import { MapLayerContainer } from "./map-layer-container.class";
+import { MapLayer } from "./map-layer.class";
+import { RouteStopPatternSubjectService } from "./../../shared/services/subjects/route-stop-pattern-subject.service";
+import { RouteStopPattern } from "./../../shared/models/route-stop-pattern.class";
 import { Component, OnInit } from "@angular/core";
 import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
@@ -13,14 +14,15 @@ import LayerVector from "ol/layer/Vector";
 import { LineString, Point } from "ol/geom";
 import { Style, Fill, Stroke } from "ol/style";
 import { fromLonLat } from "ol/proj";
-import { filter } from "rxjs/operators";
+import { filter, takeUntil } from "rxjs/operators";
+import { BaseComponent } from "src/app/base.component";
 
 @Component({
 	selector: "app-map",
 	templateUrl: "./map.component.html",
 	styleUrls: ["./map.component.css"]
 })
-export class MapComponent implements OnInit {
+export class MapComponent extends BaseComponent implements OnInit {
 	private map: Map;
 	private allRouteStopPatternsForSelectedRoute: RouteStopPattern[];
 	private layers: MapLayerContainer = new MapLayerContainer();
@@ -28,8 +30,9 @@ export class MapComponent implements OnInit {
 	private strokeSize = 10;
 
 	constructor(
+		private transitOperatorSubjectService: TransitOperatorSubjectService,
 		private routeStopPatternSubjectService: RouteStopPatternSubjectService,
-		private routeSubjectService: RouteSubjectService) { }
+		private routeSubjectService: RouteSubjectService) { super(); }
 
 	ngOnInit() {
 		this.map = new Map({
@@ -45,14 +48,27 @@ export class MapComponent implements OnInit {
 			})
 		});
 
+		this.transitOperatorSubjectService.transitOperatorOnestopId$
+			.pipe(
+				takeUntil(this.unsubscribe$)
+			)
+			.subscribe(operator => this.reset());
+
 		this.routeSubjectService.selectedRoute$
+			.pipe(
+				takeUntil(this.unsubscribe$)
+			)
 			.subscribe(route => this.reset());
 
 		this.routeStopPatternSubjectService.routeStopPatternsForSelectedRoute$
+			.pipe(
+				takeUntil(this.unsubscribe$)
+			)
 			.subscribe(rsps => this.receiveRouteStopPatterns(rsps));
 
 		this.routeStopPatternSubjectService.selectedRouteStopPatterns$
 			.pipe(
+				takeUntil(this.unsubscribe$),
 				filter(rsps => rsps != null)
 			)
 			.subscribe(selectedRsps => this.updateVisibility(selectedRsps));
@@ -67,6 +83,7 @@ export class MapComponent implements OnInit {
 	}
 
 	private receiveRouteStopPatterns(allRouteStopPatterns: RouteStopPattern[]) {
+		console.log("setting rsp", allRouteStopPatterns);
 		this.allRouteStopPatternsForSelectedRoute = allRouteStopPatterns;
 		if (allRouteStopPatterns == null) {
 			this.reset();
@@ -78,6 +95,7 @@ export class MapComponent implements OnInit {
 	}
 
 	private reset() {
+		console.log("resetting");
 		this.colorStep = 0;
 		this.strokeSize = 10;
 		for (const layer of this.layers.values()) {

@@ -1,3 +1,4 @@
+import { SuggestedOperatorsComponent } from "./controls-container/suggested-operators/suggested-operators.component";
 import { RouteStopPatternListComponent } from "./controls-container/route-stop-pattern-list/route-stop-pattern-list.component";
 import { RoutesListComponent } from "./controls-container/routes-list/routes-list.component";
 import { OnestopInputComponent } from "./controls-container/onestop-input/onestop-input.component";
@@ -10,6 +11,7 @@ import { MapComponent } from "./map-container/map/map.component";
 import { MapContainerComponent } from "./map-container/map-container.component";
 import { ControlsContainerComponent } from "./controls-container/controls-container.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AboutComponent } from "./about/about.component";
 
 @NgModule({
 	declarations: [
@@ -19,7 +21,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 		ControlsContainerComponent,
 		OnestopInputComponent,
 		RoutesListComponent,
-		RouteStopPatternListComponent
+		RouteStopPatternListComponent,
+		SuggestedOperatorsComponent,
+		AboutComponent
 	],
 	imports: [
 		BrowserModule,
@@ -27,7 +31,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 		HttpClientModule,
 		ReactiveFormsModule
 	],
-		providers: [],
-		bootstrap: [AppComponent]
-	})
+	providers: [],
+	bootstrap: [
+		AppComponent
+	]
+})
 export class AppModule { }

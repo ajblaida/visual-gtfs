@@ -1,0 +1,12 @@
+.suggestion-card-list {
+	padding: 0;
+}
+
+.suggestion-card {
+	display: block;
+	border: thin solid black;
+	text-align: center;
+	font-size: 1.5em;
+	background-color: gray;
+	cursor: pointer;
+}
