@@ -19,7 +19,8 @@ export class RouteService {
 		return this.http.get<RouteResponseDto>(this.url, {
 				params: {
 					operated_by: oneStopId,
-					per_page: "10"
+					per_page: "50",
+					vehicle_type: "metro"
 				}
 			})
 			.pipe(

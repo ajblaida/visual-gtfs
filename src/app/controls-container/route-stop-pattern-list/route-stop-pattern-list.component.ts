@@ -20,6 +20,10 @@ export class RouteStopPatternListComponent implements OnInit {
 		this.initCheckboxGroup();
 	}
 
+	get routeStopPatternControls(): FormArray {
+		return this.checkboxGroup.get("routeStopPatterns") as FormArray;
+	}
+
 	ngOnInit() {
 		this.routeStopPatternSubjectService.routeStopPatternsForSelectedRoute$
 			.pipe(

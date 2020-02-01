@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/visual-gtfs",
+            "outputPath": "../ajblaida.github.io/visual-gtfs-dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -47,6 +47,8 @@
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
+			  "deployUrl": "https://ajblaida.github.io/visual-gtfs-dist/",
+			  "baseHref": "visual-gtfs-dist/",
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
