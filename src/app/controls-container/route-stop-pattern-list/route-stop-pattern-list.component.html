@@ -1,0 +1,10 @@
+<div *ngIf="vm$ | async as vm">
+	<form [formGroup]="checkboxGroup" *ngIf="checkboxGroup && vm.length">
+	<label 
+		*ngFor="let checkboxControl of checkboxGroup.controls.routeStopPatterns.controls; let i = index"
+	>
+		<input type="checkbox" [formControl]="checkboxControl" />
+		{{vm[i].onestopId}}
+	</label>
+	</form>
+</div>

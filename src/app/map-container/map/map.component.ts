@@ -1,7 +1,9 @@
+import { MapLayerContainer } from './map-layer-container.class';
+import { MapLayer } from './map-layer.class';
 import { RouteStopPatternSubjectService } from './../../shared/services/subjects/route-stop-pattern-subject.service';
 import { RouteStopPattern } from './../../shared/models/route-stop-pattern.class';
 import { Component, OnInit } from "@angular/core";
-import {Map, View} from "ol";
+import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import Feature from "ol/Feature";
@@ -19,6 +21,9 @@ import { filter } from "rxjs/operators";
 })
 export class MapComponent implements OnInit {
 	private map: Map;
+	private allRouteStopPatternsForSelectedRoute: RouteStopPattern[];
+	private layers: MapLayerContainer = new MapLayerContainer();
+
 	constructor(private routeStopPatternSubjectService: RouteStopPatternSubjectService) { }
 
 	ngOnInit() {
@@ -36,53 +41,60 @@ export class MapComponent implements OnInit {
 		});
 
 		this.routeStopPatternSubjectService.routeStopPatternsForSelectedRoute$
+			.subscribe(rsps => this.receiveRouteStopPatterns(rsps));
+
+		this.routeStopPatternSubjectService.selectedRouteStopPatterns$
 			.pipe(
 				filter(rsps => rsps != null)
 			)
-			.subscribe(rsps => this.addStopOverlay(rsps));
+			.subscribe(selectedRsps => this.updateVisibility(selectedRsps));
 	}
 
-	addStopOverlay(routeStopPatterns: RouteStopPattern[]) {
-		console.log('rsps', routeStopPatterns);
-		let points = routeStopPatterns
-			.map(rsp => rsp.geometry.coordinates);
-			// .reduce((next: number[], collection: number[]) => {
-			// 	return collection = collection.concat(next);
-			// }, []) as number[][];
-		console.log('got points', points);
-		points = points[0];
-		const vectorPoints = new SourceVector({});
+	private updateVisibility(selectedRouteStopPatterns: RouteStopPattern[]) {
+		this.allRouteStopPatternsForSelectedRoute.forEach(rsp => {
+			const isSelected = selectedRouteStopPatterns.findIndex(
+				(selectedRsp => selectedRsp.onestopId === rsp.onestopId)) >= 0;
+			this.layers.get(rsp.onestopId).lineLayerVector.setVisible(isSelected);
+		});
+	}
+
+	private receiveRouteStopPatterns(allRouteStopPatterns: RouteStopPattern[]) {
+		this.allRouteStopPatternsForSelectedRoute = allRouteStopPatterns;
+		if (allRouteStopPatterns == null) {
+			for (const layer of this.layers.values()) {
+				this.map.removeLayer(layer.lineLayerVector);
+			}
+			this.layers.clear();
+		} else {
+			allRouteStopPatterns.forEach(rsp => {
+				this.layers.set(rsp.onestopId, this.addStopOverlay(rsp));
+			});
+		}
+	}
+
+	private addStopOverlay(routeStopPattern: RouteStopPattern): MapLayer {
+		const lineSourceVector = new SourceVector({});
+
+		const lineLayerVector = new LayerVector({
+			source: lineSourceVector,
+			style: new Style({
+				fill: new Fill({ color: "#f00", weight: 5 }),
+				stroke: new Stroke({ color: "#f00", width: 5 })
+			}),
+		});
+
+		this.map.addLayer(lineLayerVector);
+		const points = routeStopPattern.geometry.coordinates;
 
 		for (let i = 0; i < points.length; i++) {
 			points[i] = fromLonLat(points[i]);
-			vectorPoints.addFeature(new Feature({
-				geometry: new Point(points[i])
-			}));
 		}
 
 		const featureLine = new Feature({
 			geometry: new LineString(points)
 		});
 
-		const vectorLine = new SourceVector({});
-		vectorLine.addFeature(featureLine);
-
-		const vectorLineLayer = new LayerVector({
-			source: vectorLine,
-			style: new Style({
-				fill: new Fill({ color: "#f00", weight: 5 }),
-				stroke: new Stroke({ color: "#f00", width: 5 })
-			})
-		});
-
-
-		const vectorPointlayer = new LayerVector({
-			source: vectorPoints
-		});
-
-
-		this.map.addLayer(vectorPointlayer);
-
-		this.map.addLayer(vectorLineLayer);
+		lineSourceVector.addFeature(featureLine);
+		return new MapLayer(lineSourceVector, lineLayerVector);
 	}
 }

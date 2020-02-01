@@ -1,3 +1,4 @@
+import { RouteStopPatternListComponent } from "./controls-container/route-stop-pattern-list/route-stop-pattern-list.component";
 import { RoutesListComponent } from "./controls-container/routes-list/routes-list.component";
 import { OnestopInputComponent } from "./controls-container/onestop-input/onestop-input.component";
 import { BrowserModule } from "@angular/platform-browser";
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 		MapContainerComponent,
 		ControlsContainerComponent,
 		OnestopInputComponent,
-		RoutesListComponent
+		RoutesListComponent,
+		RouteStopPatternListComponent
 	],
 	imports: [
 		BrowserModule,
