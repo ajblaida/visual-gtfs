@@ -1,4 +1,4 @@
-import { RouteStopPatternDto } from "../dto/route-stop-pattern-dto.class"
+import { RouteStopPatternDto } from "../dto/route-stop-pattern-dto.class";
 
 export class RouteStopPattern {
 	constructor(dto: RouteStopPatternDto) {

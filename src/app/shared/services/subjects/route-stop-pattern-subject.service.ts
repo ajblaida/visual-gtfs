@@ -1,5 +1,5 @@
-import { switchMap, filter, tap } from 'rxjs/operators';
-import { RouteSubjectService } from './route-subject.service';
+import { switchMap, filter, tap } from "rxjs/operators";
+import { RouteSubjectService } from "./route-subject.service";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import Route from "../../models/route.class";
@@ -15,7 +15,8 @@ export class RouteStopPatternSubjectService {
 	private selectedRouteStopPatternsBehaviorSubject = new BehaviorSubject<RouteStopPattern[]>(null);
 	public selectedRouteStopPatterns$ = this.selectedRouteStopPatternsBehaviorSubject.asObservable();
 
-	constructor(private routeSubjectService: RouteSubjectService,
+	constructor(
+		private routeSubjectService: RouteSubjectService,
 		private routeStopPatternService: RouteStopPatternService) {
 		this.routeSubjectService.selectedRoute$
 			.pipe(

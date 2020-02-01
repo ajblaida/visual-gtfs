@@ -1,3 +1,4 @@
+// tslint:disable: no-bitwise
 import { TransitOperatorSubjectService } from "./../../shared/services/subjects/transit-operator-subject.service";
 import { RouteSubjectService } from "./../../shared/services/subjects/route-subject.service";
 import { MapLayerContainer } from "./map-layer-container.class";
@@ -83,7 +84,6 @@ export class MapComponent extends BaseComponent implements OnInit {
 	}
 
 	private receiveRouteStopPatterns(allRouteStopPatterns: RouteStopPattern[]) {
-		console.log("setting rsp", allRouteStopPatterns);
 		this.allRouteStopPatternsForSelectedRoute = allRouteStopPatterns;
 		if (allRouteStopPatterns == null) {
 			this.reset();
@@ -95,7 +95,6 @@ export class MapComponent extends BaseComponent implements OnInit {
 	}
 
 	private reset() {
-		console.log("resetting");
 		this.colorStep = 0;
 		this.strokeSize = 10;
 		for (const layer of this.layers.values()) {
@@ -133,16 +132,19 @@ export class MapComponent extends BaseComponent implements OnInit {
 	}
 
 
-	private rainbow(step): string {
-		// This function generates vibrant, "evenly spaced" colours (i.e. no clustering). 
-		// Adam Cole, 2011-Sept-14
+	private rainbow(step: number): string {
+		// This function generates vibrant, "evenly spaced" colours (i.e. no clustering).
+		// Adapted from Adam Cole, 2011-Sept-14
 		// HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
-		let r, g, b;
+		let r: number;
+		let g: number;
+		let b: number;
 		const h = step / this.allRouteStopPatternsForSelectedRoute.length;
+
 		const i = ~~(h * 6);
 		const f = h * 6 - i;
 		const q = 1 - f;
-		switch(i % 6){
+		switch (i % 6) {
 			case 0: r = 1; g = f; b = 0; break;
 			case 1: r = q; g = 1; b = 0; break;
 			case 2: r = 0; g = 1; b = f; break;

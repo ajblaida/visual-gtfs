@@ -1,4 +1,4 @@
-import { BaseComponent } from './../../base.component';
+import { BaseComponent } from "./../../base.component";
 import { RouteStopPatternSubjectService } from "./../../shared/services/subjects/route-stop-pattern-subject.service";
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, FormBuilder, FormArray, FormControl } from "@angular/forms";

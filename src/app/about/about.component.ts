@@ -1,5 +1,5 @@
-import { BaseComponent } from './../base.component';
-import { TransitOperatorSubjectService } from './../shared/services/subjects/transit-operator-subject.service';
+import { BaseComponent } from "./../base.component";
+import { TransitOperatorSubjectService } from "./../shared/services/subjects/transit-operator-subject.service";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { filter, takeUntil } from "rxjs/operators";
@@ -25,5 +25,4 @@ export class AboutComponent extends BaseComponent implements OnInit {
 			)
 			.subscribe(() => this.router.navigateByUrl("/"));
 	}
-
 }

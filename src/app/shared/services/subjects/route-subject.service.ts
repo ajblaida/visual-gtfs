@@ -1,4 +1,4 @@
-import { TransitOperatorSubjectService } from './transit-operator-subject.service';
+import { TransitOperatorSubjectService } from "./transit-operator-subject.service";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import Route from "../../models/route.class";

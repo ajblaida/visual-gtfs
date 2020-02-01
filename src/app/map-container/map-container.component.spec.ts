@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { MapContainerComponent } from './map-container.component';
+import { MapContainerComponent } from "./map-container.component";
 
-describe('MapContainerComponent', () => {
+describe("MapContainerComponent", () => {
 	let component: MapContainerComponent;
 	let fixture: ComponentFixture<MapContainerComponent>;
 
@@ -19,7 +19,7 @@ describe('MapContainerComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('should create', () => {
+	it("should create", () => {
 		expect(component).toBeTruthy();
 	});
 });

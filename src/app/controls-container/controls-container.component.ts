@@ -8,7 +8,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ControlsContainerComponent implements OnInit {
 
-	private vm$ = this.transitOperatorSubjectService.transitOperatorOnestopId$;
+	public vm$ = this.transitOperatorSubjectService.transitOperatorOnestopId$;
 
 	constructor(private transitOperatorSubjectService: TransitOperatorSubjectService) {
 	}

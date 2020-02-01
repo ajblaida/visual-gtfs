@@ -17,7 +17,6 @@ export class MapLayerContainer {
 
 	public delete(onestopId: string) {
 		this.mapLayers.delete(onestopId);
-		console.log(this.mapLayers);
 	}
 
 	public clear() {
