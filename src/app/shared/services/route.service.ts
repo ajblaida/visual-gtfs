@@ -15,12 +15,12 @@ export class RouteService {
 
 	private url = this.http.baseUrl + "routes";
 
-	get(oneStopId: string): Observable<RouteResponse> {
+	get(oneStopId: string, selectedVehicleTypes: number[]): Observable<RouteResponse> {
 		return this.http.get<RouteResponseDto>(this.url, {
 				params: {
 					operated_by: oneStopId,
 					per_page: "50",
-					vehicle_type: "metro"
+					vehicle_type: selectedVehicleTypes.join(","),
 				}
 			})
 			.pipe(

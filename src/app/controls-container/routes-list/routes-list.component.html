@@ -2,8 +2,18 @@
 	<button id="clear-route-button" (click)="clearSelectedRoute()">Back {{route.name}}</button>
 </div>
 <div *ngIf="vm$ | async as vm">
+	<div class="route-type-container">
+		<form [formGroup]="checkboxGroup" *ngIf="checkboxGroup">
+			<label 
+				*ngFor="let checkboxControl of vehicleTypeControls.controls; let i = index"
+			>
+				<input type="checkbox" [formControl]="checkboxControl" />
+				{{vehicleTypes[i].name}}
+			</label>
+		</form>
+	</div>
 	<ul class="stop-card-list">
-		<li (click)="onRouteClicked(route)" class="stop-card" *ngFor="let route of vm.routes">
+		<li (click)="onRouteClicked(route)" class="stop-card" *ngFor="let route of vm">
 			{{route.name}}
 		</li>
 	</ul>

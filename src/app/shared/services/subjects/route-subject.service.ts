@@ -1,7 +1,10 @@
+import { VehicleTypesSubjectService } from "./vehicle-types-subject.service";
+import { RouteService } from "./../route.service";
 import { TransitOperatorSubjectService } from "./transit-operator-subject.service";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, combineLatest } from "rxjs";
 import Route from "../../models/route.class";
+import { tap, filter, switchMap } from "rxjs/operators";
 
 @Injectable({
 	providedIn: "root"
@@ -11,9 +14,29 @@ export class RouteSubjectService {
 	private selectedRouteBehaviorSubject = new BehaviorSubject<Route>(null);
 	public selectedRoute$ = this.selectedRouteBehaviorSubject.asObservable();
 
-	constructor(private transitOperatorSubjectservice: TransitOperatorSubjectService) {
-		transitOperatorSubjectservice.transitOperatorOnestopId$
-			.subscribe(() => this.clear());
+	private routesForSelectedOperatorSubject = new BehaviorSubject<Route[]>(null);
+	public routesForSelectedOperator$ = this.routesForSelectedOperatorSubject.asObservable();
+
+	constructor(
+		private transitOperatorSubjectservice: TransitOperatorSubjectService,
+		private routeService: RouteService,
+		private vehicleTypesSubjectService: VehicleTypesSubjectService
+	) {
+		combineLatest(
+			transitOperatorSubjectservice.transitOperatorOnestopId$,
+			vehicleTypesSubjectService.selectedVehicleTypes$)
+			.pipe(
+				tap((params) => console.log('cl', params)),
+				filter((params) => params.every(param => param != null)),
+				switchMap(([onestopId, selectedVehicleTypes]) => {
+					this.clear();
+					return routeService.get(onestopId, selectedVehicleTypes);
+				})
+			)
+			.subscribe((routesResponse) => {
+				console.log('got response', routesResponse);
+				this.routesForSelectedOperatorSubject.next(routesResponse.routes);
+			});
 	}
 
 	public setSelectedRoute(route: Route) {

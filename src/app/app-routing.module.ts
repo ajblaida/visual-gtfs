@@ -11,9 +11,13 @@ const routes: Routes = [
 		component: AboutComponent
 	},
 	{
+		path: "visual-gtfs",
+		component: MapContainerComponent
+	},
+	{
 		path: "",
 		pathMatch: "full",
-		component: MapContainerComponent
+		redirectTo: "/visual-gtfs"
 	}
 ];
 
