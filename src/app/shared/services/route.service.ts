@@ -16,6 +16,12 @@ export class RouteService {
 	private url = this.http.baseUrl + "routes";
 
 	get(oneStopId: string, selectedVehicleTypes: number[]): Observable<RouteResponse> {
+		if (!selectedVehicleTypes.length) {
+			return of({
+				routes: [],
+				metadata: null
+			});
+		}
 		return this.http.get<RouteResponseDto>(this.url, {
 				params: {
 					operated_by: oneStopId,

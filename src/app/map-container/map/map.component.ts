@@ -53,13 +53,13 @@ export class MapComponent extends BaseComponent implements OnInit {
 			.pipe(
 				takeUntil(this.unsubscribe$)
 			)
-			.subscribe(operator => this.reset());
+			.subscribe(() => this.reset());
 
 		this.routeSubjectService.selectedRoute$
 			.pipe(
 				takeUntil(this.unsubscribe$)
 			)
-			.subscribe(route => this.reset());
+			.subscribe(() => this.reset());
 
 		this.routeStopPatternSubjectService.routeStopPatternsForSelectedRoute$
 			.pipe(

@@ -26,7 +26,6 @@ export class RouteSubjectService {
 			transitOperatorSubjectservice.transitOperatorOnestopId$,
 			vehicleTypesSubjectService.selectedVehicleTypes$)
 			.pipe(
-				tap((params) => console.log('cl', params)),
 				filter((params) => params.every(param => param != null)),
 				switchMap(([onestopId, selectedVehicleTypes]) => {
 					this.clear();
@@ -34,7 +33,6 @@ export class RouteSubjectService {
 				})
 			)
 			.subscribe((routesResponse) => {
-				console.log('got response', routesResponse);
 				this.routesForSelectedOperatorSubject.next(routesResponse.routes);
 			});
 	}

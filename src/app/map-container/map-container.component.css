@@ -1,0 +1,9 @@
+#hovered-info-box {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 300px;
+	width: 300px;
+	z-index: 300;
+	background-color: lightgray;
+}

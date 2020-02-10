@@ -1,11 +1,21 @@
-<app-onestop-input></app-onestop-input>
+<div class="controls-wrapper">
+	<div class="main">
+		<app-onestop-input></app-onestop-input>
 
-<div *ngIf="vm$ | async as vm; else suggestions">
-	<app-routes-list></app-routes-list>
-	<app-route-stop-pattern-list></app-route-stop-pattern-list>
+		<div *ngIf="vm$ | async as vm; else suggestions" class="list">
+			<app-routes-list></app-routes-list>
+			<app-route-stop-pattern-list></app-route-stop-pattern-list>
+		</div>
+		<ng-template #suggestions>
+			<app-suggested-operators></app-suggested-operators>
+		</ng-template>
+	</div>
+	<div class="pagination">
+		<p>TODO: Paging</p>
+	</div>
+	<div class="footer">
+		<div class="footer-content">&copy; Adam Blaida {{currentYear()}}
+		<a routerLink="/about" routerLinkActive="active">About</a>
+		</div>
+	</div>
 </div>
-<ng-template #suggestions>
-	<app-suggested-operators></app-suggested-operators>
-</ng-template>
-
-<a routerLink="/about" routerLinkActive="active">About</a>

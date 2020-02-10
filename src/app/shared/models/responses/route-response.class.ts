@@ -10,5 +10,5 @@ export default class RouteResponse extends PagedResponse {
 		this.metadata = dto.meta;
 	}
 
-	routes: Route[];
+	public routes: Route[];
 }

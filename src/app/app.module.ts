@@ -1,3 +1,4 @@
+import { InfoBoxComponent } from "./map-container/info-box/info-box.component";
 import { SuggestedOperatorsComponent } from "./controls-container/suggested-operators/suggested-operators.component";
 import { RouteStopPatternListComponent } from "./controls-container/route-stop-pattern-list/route-stop-pattern-list.component";
 import { RoutesListComponent } from "./controls-container/routes-list/routes-list.component";
@@ -23,7 +24,8 @@ import { AboutComponent } from "./about/about.component";
 		RoutesListComponent,
 		RouteStopPatternListComponent,
 		SuggestedOperatorsComponent,
-		AboutComponent
+		AboutComponent,
+		InfoBoxComponent
 	],
 	imports: [
 		BrowserModule,

@@ -1,3 +1,4 @@
+import { HoveredSubjectService } from './../../shared/services/subjects/hovered-subject.service';
 import { VehicleTypesSubjectService } from './../../shared/services/subjects/vehicle-types-subject.service';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
@@ -32,9 +33,8 @@ export class RoutesListComponent implements OnInit {
 	];
 
 	constructor(
-		private routeService: RouteService,
+		private hoveredSubjectService: HoveredSubjectService,
 		private routeSubjectService: RouteSubjectService,
-		private transitOperatorSubjectService: TransitOperatorSubjectService,
 		private formBuilder: FormBuilder,
 		private vehicleTypeSubjectService: VehicleTypesSubjectService
 	) { }
@@ -69,7 +69,7 @@ export class RoutesListComponent implements OnInit {
 
 	setSelectedVehicleTypes(selected: boolean[]) {
 		if (selected.every(val => !val)) {
-			this.vehicleTypeSubjectService.setSelectedVehicleTypes([-1]);
+			this.vehicleTypeSubjectService.setSelectedVehicleTypes([]);
 			return;
 		}
 		const selectedVehicleTypes = this.vehicleTypes
@@ -84,5 +84,9 @@ export class RoutesListComponent implements OnInit {
 
 	clearSelectedRoute() {
 		this.routeSubjectService.clear();
+	}
+
+	onHover(route: Route) {
+		this.hoveredSubjectService.setHovered(route);
 	}
 }

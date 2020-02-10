@@ -1,9 +1,9 @@
 <div *ngIf="vm$ | async as vm">
 	<form [formGroup]="checkboxGroup" *ngIf="checkboxGroup && vm.length">
-	<label 
+	<label (mouseenter)="onHover(vm[i])" (mouseleave)="onHover(null)"
 		*ngFor="let checkboxControl of routeStopPatternControls.controls; let i = index"
 	>
-		<input type="checkbox" [formControl]="checkboxControl" />
+		<input type="checkbox"  [formControl]="checkboxControl" />
 		{{vm[i].onestopId}}
 	</label>
 	</form>

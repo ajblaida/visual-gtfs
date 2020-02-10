@@ -1,20 +1,23 @@
+import { RouteStopPattern } from "./../../shared/models/route-stop-pattern.class";
 import { BaseComponent } from "./../../base.component";
 import { RouteStopPatternSubjectService } from "./../../shared/services/subjects/route-stop-pattern-subject.service";
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, FormBuilder, FormArray, FormControl } from "@angular/forms";
 import { filter, takeUntil } from "rxjs/operators";
+import { HoveredSubjectService } from "src/app/shared/services/subjects/hovered-subject.service";
 
 @Component({
 	selector: "app-route-stop-pattern-list",
 	templateUrl: "./route-stop-pattern-list.component.html",
 	styleUrls: ["./route-stop-pattern-list.component.css"],
-	// changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RouteStopPatternListComponent extends BaseComponent implements OnInit {
 	vm$ = this.routeStopPatternSubjectService.routeStopPatternsForSelectedRoute$;
 	public checkboxGroup: FormGroup;
 
 	constructor(
+		private hoveredSubjectService: HoveredSubjectService,
 		private formBuilder: FormBuilder,
 		private routeStopPatternSubjectService: RouteStopPatternSubjectService
 	) {
@@ -62,6 +65,10 @@ export class RouteStopPatternListComponent extends BaseComponent implements OnIn
 		this.checkboxGroup = this.formBuilder.group({
 			routeStopPatterns: new FormArray([])
 		});
+	}
+
+	onHover(route: RouteStopPattern) {
+		this.hoveredSubjectService.setHovered(route);
 	}
 
 }

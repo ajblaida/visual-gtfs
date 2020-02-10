@@ -1,20 +1,25 @@
-<div *ngIf="selectedRoute$ | async as route">
-	<button id="clear-route-button" (click)="clearSelectedRoute()">Back {{route.name}}</button>
+<div *ngIf="selectedRoute$ | async as selectedRoute">
+	<button id="clear-route-button" (click)="clearSelectedRoute()">Back {{selectedRoute.name}}</button>
 </div>
 <div *ngIf="vm$ | async as vm">
-	<div class="route-type-container">
-		<form [formGroup]="checkboxGroup" *ngIf="checkboxGroup">
-			<label 
-				*ngFor="let checkboxControl of vehicleTypeControls.controls; let i = index"
-			>
-				<input type="checkbox" [formControl]="checkboxControl" />
-				{{vehicleTypes[i].name}}
-			</label>
-		</form>
+	<div *ngIf="!(selectedRoute$ | async)">
+		<div class="route-type-container">
+			<form [formGroup]="checkboxGroup" *ngIf="checkboxGroup">
+				<label 
+					*ngFor="let checkboxControl of vehicleTypeControls.controls; let i = index"
+				>
+					<input type="checkbox" [formControl]="checkboxControl" />
+					{{vehicleTypes[i].name}}
+				</label>
+			</form>
+		</div>
+		<ul class="stop-card-list">
+			<li (click)="onRouteClicked(route)" (mouseenter)="onHover(route)" (mouseleave)="onHover(null)" class="stop-card" *ngFor="let route of vm">
+				{{route.name}}
+			</li>
+		</ul>
 	</div>
-	<ul class="stop-card-list">
-		<li (click)="onRouteClicked(route)" class="stop-card" *ngFor="let route of vm">
-			{{route.name}}
-		</li>
-	</ul>
+	<ng-container *ngIf="!vm.length">
+		<i>No routes match selections. <a href="#" (click)="$event.preventDefault();initCheckboxGroup()">Reset filters</a></i>
+	</ng-container>
 </div>
