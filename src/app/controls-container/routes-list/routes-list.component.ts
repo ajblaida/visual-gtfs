@@ -21,7 +21,7 @@ export class RoutesListComponent implements OnInit {
 	public vm$: Observable<Route[]>;
 	public selectedRoute$: Observable<Route>;
 	public checkboxGroup: FormGroup;
-	private vehicleTypes = [
+	public vehicleTypes = [
 		{
 			name: "Metro",
 			typeId: 1
