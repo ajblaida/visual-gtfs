@@ -9,11 +9,13 @@ import { Component, OnInit } from "@angular/core";
 import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
+import ImageStatic from "ol/source/ImageStatic";
 import Feature from "ol/Feature";
 import SourceVector from "ol/source/Vector";
 import LayerVector from "ol/layer/Vector";
+import ImageLayer from "ol/layer/Image";
 import { LineString, Point } from "ol/geom";
-import { Style, Fill, Stroke } from "ol/style";
+import { Style, Fill, Stroke, Icon } from "ol/style";
 import { fromLonLat } from "ol/proj";
 import { filter, takeUntil } from "rxjs/operators";
 import { BaseComponent } from "src/app/base.component";
@@ -108,13 +110,40 @@ export class MapComponent extends BaseComponent implements OnInit {
 		const nextColor = this.rainbow(this.colorStep++);
 		const stroke = this.strokeSize;
 		this.strokeSize -= 2;
+
+		var styleFunction = function(feature) {
+			var geometry = feature.getGeometry();
+			var styles = [
+			// linestring
+				new Style({
+					fill: new Fill({ color: nextColor, weight: stroke }),
+					stroke: new Stroke({ color: nextColor, width: stroke })
+				})
+			];
+
+        geometry.forEachSegment(function(start, end) {
+			var dx = end[0] - start[0];
+			var dy = end[1] - start[1];
+			var rotation = Math.atan2(dy, dx);
+			// arrows
+			styles.push(new Style({
+				geometry: new Point(end),
+				image: new Icon({
+				src: 'https://openlayers.org/en/v3.20.1/examples/data/arrow.png',
+				anchor: [0.75, 0.5],
+				rotateWithView: true,
+				rotation: -rotation
+				})
+			}))});
+
+			return styles;
+		}
+
 		const lineLayerVector = new LayerVector({
 			source: lineSourceVector,
-			style: new Style({
-				fill: new Fill({ color: nextColor, weight: stroke }),
-				stroke: new Stroke({ color: nextColor, width: stroke })
-			}),
+			style:styleFunction
 		});
+
 
 		this.map.addLayer(lineLayerVector);
 		const points = routeStopPattern.geometry.coordinates;
@@ -129,7 +158,7 @@ export class MapComponent extends BaseComponent implements OnInit {
 
 		lineSourceVector.addFeature(featureLine);
 		return new MapLayer(lineSourceVector, lineLayerVector);
-	}
+	};
 
 
 	private rainbow(step: number): string {
